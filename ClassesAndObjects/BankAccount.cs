@@ -12,14 +12,20 @@ namespace ClassesAndObjects
         public string Owner { get; set; }
         public decimal Balance { get; }
         
+        public BankAccount(string name, decimal initialBalance)
+        {
+            Owner = name;
+            Balance = initialBalance;
+        }
+
         public void MakeDeposit(decimal amount, DateTime date, string note)
         {
-
+            //TODO
         }
 
         public void MakeWithdrawal(decimal amount, DateTime date, string note)
         {
-
+            //TODO
         }
     }
 }
