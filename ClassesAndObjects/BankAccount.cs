@@ -12,24 +12,50 @@ namespace ClassesAndObjects
 
         public string AccountNumber { get; }
         public string Owner { get; set; }
-        public decimal Balance { get; }
+        public decimal Balance
+        {
+            get
+            {
+                decimal balance = 0;
+                foreach(Transaction transaction in _allTransactions)
+                {
+                    balance += transaction.Amount;
+                }
+                return balance;
+            }
+        }
+        private List<Transaction> _allTransactions = new List<Transaction>();
         
         public BankAccount(string name, decimal initialBalance)
         {
             Owner = name;
-            Balance = initialBalance;
+            MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
             AccountNumber = s_accountNumberSeed.ToString();
             s_accountNumberSeed++;
         }
 
         public void MakeDeposit(decimal amount, DateTime date, string note)
         {
-            //TODO
+            if(amount <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), "Amount of deposit must be positive");
+            }
+            Transaction deposit = new Transaction(amount, date, note);
+            _allTransactions.Add(deposit);
         }
 
         public void MakeWithdrawal(decimal amount, DateTime date, string note)
         {
-            //TODO
+            if(amount <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawal must be positive");
+            }
+            if(Balance - amount < 0)
+            {
+                throw new InvalidOperationException("Insufficient funds for this withdrawal.");
+            }
+            Transaction withdrawal = new Transaction(-amount, date, note);
+            _allTransactions.Add(withdrawal);
         }
     }
 }
