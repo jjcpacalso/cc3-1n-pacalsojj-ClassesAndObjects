@@ -15,6 +15,8 @@ namespace ClassesAndObjects
             account.MakeDeposit(100, DateTime.Now, "Friend paid me back");
             Console.WriteLine(account.Balance);
 
+            Console.WriteLine(account.GetAccountHistory());
+
             try
             {
                 account.MakeWithdrawal(750, DateTime.Now, "Attempt to overwithdraw.");

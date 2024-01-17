@@ -57,5 +57,21 @@ namespace ClassesAndObjects
             Transaction withdrawal = new Transaction(-amount, date, note);
             _allTransactions.Add(withdrawal);
         }
+        
+        public string GetAccountHistory()
+        {
+            StringBuilder report = new StringBuilder();
+
+            decimal balance = 0;
+            report.AppendLine("Date\t\tAmount\tBalance\tNote");
+            foreach(Transaction transaction in _allTransactions)
+            {
+                balance += transaction.Amount;
+                report.AppendLine($"{transaction.Date.ToShortDateString()}\t{transaction.Amount}\t{balance}\t{transaction.Notes}");
+            }
+
+            return report.ToString();
+        }
+        
     }
 }
